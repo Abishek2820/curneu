@@ -1,0 +1,145 @@
+#READING A VIDEO FILE
+video=VideoReader('C:\Users\abi20\Desktop\curneu.mp4');
+
+vidHeight=video.Height; 
+vidWidth=video.Width; 
+
+k=1;
+while hasFrame(video)
+    allframes(k).cdata = readFrame(video);
+    k = k+1;
+end
+i=1;
+while hasFrame(video)
+frames(i,:)=impixel(allframes(i).cdata,1:vidHeight-1,1:vidHeight-1);
+i=i+1;
+end
+#MATPLOB CODE FOR TAKING READINGS OF RGB
+Mat img;
+number = 0;
+VideoCapture cap(filename_input_video);
+if(!cap.isOpened()) {
+    printf("No video to Read!\n");
+    return -1;
+}
+
+for( ; ; ) {
+    cap >> img;
+    if(img.empty())
+        break;
+    number++;
+
+    for(int i=0; i<img.rows; i++) {
+        for(int j=0; j<img.cols; j++) {
+            int blue = img.at<Vec3b>(i, j)[0];
+            int green = img.at<Vec3b>(i, j)[1];
+            int red = img.at<Vec3b>(i, j)[2];
+
+            if(number == 200 && i==0 && j==0) {
+                printf("blue=%d green=%d red=%d", blue, green, red);
+            }
+        }
+    }
+
+    if(number == 200) {
+        number = 0;
+    }
+}
+#GRAPH REPRESENTATION 
+nclude <iostream> 
+#include <pngwriter.h> 
+#include <string> 
+
+  
+// Function to generate PNG image 
+
+void generate_PNG(int const width, 
+
+                  int const height, 
+
+                  std::string filepath) 
+{ 
+
+  
+
+    // Print the filepath 
+
+    cout << endl 
+
+         << "Filepath: "
+
+         << filepath.c_str(); 
+
+  
+
+    // Generate the flag 
+
+    pngwriter flag{ width, height, 0, 
+
+                    filepath.data() }; 
+
+  
+
+    // Calculate sizes 
+
+    int const size = width / 3; 
+
+  
+
+    // Fill the squares 
+
+    flag.filledsquare(0, 0, size, 
+
+                      2 * size, 0, 
+
+                      0, 65535); 
+
+  
+
+    flag.filledsquare(size, 0, 2 * size, 
+
+                      2 * size, 0, 
+
+                      65535, 65535); 
+
+  
+
+    flag.filledsquare(2 * size, 0, 
+
+                      3 * size, 2 * size, 
+
+                      65535, 0, 65535); 
+
+  
+
+    // Close the flag 
+
+    flag.close(); 
+} 
+
+  
+// Driver code 
+
+int main() 
+{ 
+
+    // Given width and height 
+
+    int width = 300, height = 200; 
+
+  
+
+    // Filepath 
+
+    std::string filepath; 
+
+  
+
+    // Function call to generate PNG image 
+
+    generate_PNG(width, height, filepath); 
+
+  
+
+    return 0; 
+}
